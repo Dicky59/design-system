@@ -118,6 +118,58 @@
           "acceptsNativeAttributes": true
         }
       ]
+    },
+    {
+      "name": "Input",
+      "description": "Single-line text field with built-in label, hint and error message.",
+      "guide": "design-system/components/Input/Input.md",
+      "source": "design-system/components/Input/Input.tsx",
+      "story": "design-system/components/Input/Input.stories.tsx",
+      "props": [
+        {
+          "name": "error",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Error message. Setting it marks the control invalid and links the message to it.",
+          "a11y": true
+        },
+        {
+          "name": "hint",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Helper text shown under the label and linked with `aria-describedby`."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Visible label, in Finnish. Always shown above the control.",
+          "a11y": true
+        },
+        {
+          "name": "required",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Marks the field as required and shows an asterisk. Explain the asterisk once per form."
+        },
+        {
+          "name": "type",
+          "type": "\"number\"| \"search\" | \"text\" | \"email\" | \"tel\" | \"password\" | \"url\"",
+          "required": false,
+          "description": "Input type.",
+          "default": "\"text\""
+        }
+      ],
+      "a11y": {
+        "requiredProps": [
+          "label"
+        ],
+        "notes": [
+          "Label is required. Error text is linked via aria-describedby and the control gets aria-invalid."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": []
     }
   ]
 }

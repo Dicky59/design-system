@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect, within } from "storybook/test";
 import { Select } from "./Select";
 
 const paymentTerms = [
@@ -52,5 +53,22 @@ export const Open: Story = {
   },
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole("combobox", { name: "Maksuehto" }));
+  },
+};
+
+/** The selected label is rendered right away, not only after the list has been opened. */
+export const ShowsSelectedLabel: Story = {
+  args: { label: "Tila", defaultValue: "all", options: [{ value: "all", label: "Kaikki" }, { value: "active", label: "Aktiivinen" }] },
+  play: async ({ canvasElement }) => {
+    const trigger = within(canvasElement).getByRole("combobox", { name: "Tila" });
+    await expect(trigger).toHaveTextContent("Kaikki");
+  },
+};
+
+export const ControlledValue: Story = {
+  args: { label: "Tila", value: "active", options: [{ value: "all", label: "Kaikki" }, { value: "active", label: "Aktiivinen" }] },
+  play: async ({ canvasElement }) => {
+    const trigger = within(canvasElement).getByRole("combobox", { name: "Tila" });
+    await expect(trigger).toHaveTextContent("Aktiivinen");
   },
 };

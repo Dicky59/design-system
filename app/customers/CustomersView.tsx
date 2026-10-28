@@ -31,6 +31,7 @@ import {
   CUSTOMER_STATUS_TONE,
   CUSTOMER_STATUSES,
   createCustomer,
+  DEFAULT_FILTERS,
   filterCustomers,
   sortCustomers,
 } from "./lib/customers";
@@ -57,8 +58,8 @@ export function CustomersView({ forceError }: Props) {
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [attempt, setAttempt] = useState(0);
   const [customers, setCustomers] = useState<Customer[]>(MOCK_CUSTOMERS);
-  const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [query, setQuery] = useState(DEFAULT_FILTERS.query);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>(DEFAULT_FILTERS.status);
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({
     key: "name",
     direction: "ascending",
@@ -99,8 +100,8 @@ export function CustomersView({ forceError }: Props) {
   };
 
   const clearFilters = () => {
-    setQuery("");
-    setStatusFilter("all");
+    setQuery(DEFAULT_FILTERS.query);
+    setStatusFilter(DEFAULT_FILTERS.status);
   };
 
   const retry = () => {

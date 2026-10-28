@@ -1,5 +1,5 @@
 import * as RadixSelect from "@radix-ui/react-select";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { controlBorder, controlStyles, Field, useFieldIds } from "../../lib/field";
 import { IconCheck, IconChevronDown } from "../../lib/icons";
@@ -55,12 +55,20 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
   ref,
 ) {
   const { id, hintId, errorId, controlProps } = useFieldIds(idProp, hint, error);
+  // Track the uncontrolled value so the selected label can be rendered directly. Radix only resolves it
+  // from the (closed, unmounted) list, which leaves the trigger empty on the server and before hydration.
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const currentValue = value ?? internalValue;
+  const selectedLabel = options.find((option) => option.value === currentValue)?.label;
   return (
     <Field id={id} label={label} required={required} hint={hint} hintId={hintId} error={error} errorId={errorId}>
       <RadixSelect.Root
         value={value}
         defaultValue={defaultValue}
-        onValueChange={onValueChange}
+        onValueChange={(next) => {
+          setInternalValue(next);
+          onValueChange?.(next);
+        }}
         required={required}
         disabled={disabled}
         name={name}
@@ -74,7 +82,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
           )}
           {...controlProps}
         >
-          <RadixSelect.Value placeholder={placeholder} />
+          <RadixSelect.Value placeholder={placeholder}>{selectedLabel}</RadixSelect.Value>
           <RadixSelect.Icon>
             <IconChevronDown />
           </RadixSelect.Icon>

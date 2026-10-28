@@ -3,6 +3,7 @@ import { MOCK_CUSTOMERS } from "../data/customers";
 import type { Customer, NewCustomerValues } from "../types";
 import {
   createCustomer,
+  DEFAULT_FILTERS,
   ERROR_BUSINESS_ID,
   ERROR_EMAIL,
   ERROR_REQUIRED,
@@ -37,6 +38,13 @@ describe("getInvoiceStatus", () => {
     const invoice = { number: "1", dueDate: "2026-11-12", amount: 10, paid: false };
     expect(getInvoiceStatus(invoice, "2026-11-13")).toBe("overdue");
     expect(getInvoiceStatus(invoice)).toBe("open");
+  });
+});
+
+describe("DEFAULT_FILTERS", () => {
+  it("shows all customers: empty query and status Kaikki", () => {
+    expect(DEFAULT_FILTERS).toEqual({ query: "", status: "all" });
+    expect(filterCustomers(MOCK_CUSTOMERS, DEFAULT_FILTERS)).toHaveLength(MOCK_CUSTOMERS.length);
   });
 });
 

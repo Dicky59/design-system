@@ -50,6 +50,9 @@ export function getInvoiceStatus(invoice: Invoice, today: string = DEMO_TODAY): 
 
 export type CustomerFilters = { query: string; status: StatusFilter };
 
+/** Filters on first render and after "Tyhjennä suodattimet": everyone is shown. */
+export const DEFAULT_FILTERS: CustomerFilters = { query: "", status: "all" };
+
 /** Filters by name or business ID (case-insensitive, trimmed) and by status. */
 export function filterCustomers(customers: Customer[], { query, status }: CustomerFilters): Customer[] {
   const needle = query.trim().toLowerCase();

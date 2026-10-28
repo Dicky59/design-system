@@ -60,7 +60,8 @@ async function capture(page, file, options = {}) {
 
 async function openLoaded(page, query = "") {
   await page.goto(`${BASE}/customers${query}`);
-  if (query.includes("error")) await page.getByRole("alert").waitFor();
+  // Wait for the message itself: Next.js has its own (empty) role="alert" route announcer on every page.
+  if (query.includes("error")) await page.getByText("Asiakkaiden lataus epäonnistui.").waitFor();
   else await page.getByText(/Näytetään \d+ \/ \d+ asiakasta/).waitFor();
 }
 
@@ -106,12 +107,43 @@ try {
     await openLoaded(page, "?state=error");
     await capture(page, `customers-error-${name}.png`, { fullPage: true });
 
-    // The default view in every theme (the theme is saved in localStorage, like the selector does).
+    // Every theme: the default view plus the surfaces that use many tokens (dialog, tabs, status badges,
+    // overlay, open Select list, alert tones). The theme is saved in localStorage, like the selector does.
     for (const theme of themeIds) {
+      const shot = (state) => `customers-theme-${theme}-${state}-${name}.png`;
       await page.evaluate((id) => localStorage.setItem("ds-theme", id), theme);
       await openLoaded(page);
       await page.getByRole("combobox", { name: "Teema" }).waitFor();
       await capture(page, `customers-theme-${theme}-${name}.png`, { fullPage: true });
+
+      await page.getByRole("combobox", { name: "Tila" }).click();
+      await page.getByRole("option", { name: "Erääntynyt" }).waitFor();
+      await capture(page, shot("select-open"));
+      await page.keyboard.press("Escape");
+
+      await page.getByRole("button", { name: `Avaa tiedot: ${CUSTOMER}` }).click();
+      await page.getByRole("dialog").waitFor();
+      await page.getByRole("tab", { name: "Laskut" }).click();
+      await capture(page, shot("details"));
+      await page.keyboard.press("Escape");
+      await page.getByRole("dialog").waitFor({ state: "detached" });
+
+      await page.getByRole("button", { name: "Lisää asiakas" }).click();
+      await page.getByRole("dialog").waitFor();
+      await page.getByLabel("Y-tunnus").fill("123");
+      await page.getByRole("button", { name: "Tallenna" }).click();
+      await page.getByText("Anna Y-tunnus muodossa 1234567-8.").waitFor();
+      await capture(page, shot("new-customer"));
+      await page.getByLabel("Yrityksen nimi").fill("Testi Oy");
+      await page.getByLabel("Y-tunnus").fill("7654321-0");
+      await page.getByLabel("Yhteyshenkilö").fill("Testi Henkilö");
+      await page.getByLabel("Sähköposti").fill("testi@testi.example");
+      await page.getByRole("button", { name: "Tallenna" }).click();
+      await page.getByText("Asiakas lisätty.").waitFor();
+      await capture(page, shot("alert-success"), { clip: { x: 0, y: 0, width, height: Math.min(height, 330) } });
+
+      await openLoaded(page, "?state=error");
+      await capture(page, shot("alert-error"), { clip: { x: 0, y: 0, width, height: Math.min(height, 330) } });
     }
     await page.evaluate(() => localStorage.removeItem("ds-theme"));
 

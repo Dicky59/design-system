@@ -9,7 +9,13 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "tokens:build": "node design-system/tokens/build-tokens.mjs",
+    "tokens:check": "node design-system/tokens/build-tokens.mjs --check",
+    "predev": "npm run tokens:build",
+    "prebuild": "npm run tokens:build",
+    "prestorybook": "npm run tokens:build",
+    "prebuild-storybook": "npm run tokens:build"
   },
   "dependencies": {
     "next": "16.4.3",

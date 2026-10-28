@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   Badge,
@@ -65,6 +65,8 @@ export function CustomersView({ forceError }: Props) {
   });
   const [selected, setSelected] = useState<Customer | null>(null);
   const [showAdded, setShowAdded] = useState(false);
+  // The details dialog has no trigger element, so remember the opener and return focus to it on close.
+  const openerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -85,6 +87,16 @@ export function CustomersView({ forceError }: Props) {
     }));
 
   const sortDirectionOf = (key: SortKey) => (sort.key === key ? sort.direction : "none");
+
+  const openDetails = (customer: Customer, opener: HTMLElement) => {
+    openerRef.current = opener;
+    setSelected(customer);
+  };
+
+  const closeDetails = () => {
+    setSelected(null);
+    setTimeout(() => openerRef.current?.focus(), 0);
+  };
 
   const clearFilters = () => {
     setQuery("");
@@ -221,7 +233,7 @@ export function CustomersView({ forceError }: Props) {
                               variant="ghost"
                               size="sm"
                               aria-label={`Avaa tiedot: ${customer.name}`}
-                              onClick={() => setSelected(customer)}
+                              onClick={(event) => openDetails(customer, event.currentTarget)}
                             >
                               Avaa tiedot
                             </Button>
@@ -242,7 +254,7 @@ export function CustomersView({ forceError }: Props) {
         </>
       )}
 
-      <CustomerDetailsDialog customer={selected} onClose={() => setSelected(null)} />
+      <CustomerDetailsDialog customer={selected} onClose={closeDetails} />
     </Page>
   );
 }

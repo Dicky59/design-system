@@ -11,9 +11,12 @@
   --ds-palette-neutral-700: #334155;
   --ds-palette-neutral-800: #1e293b;
   --ds-palette-neutral-900: #0f172a;
+  --ds-palette-neutral-950: #020617;
   --ds-palette-brand-50: #eff6ff;
   --ds-palette-brand-100: #dbeafe;
   --ds-palette-brand-200: #bfdbfe;
+  --ds-palette-brand-300: #93c5fd;
+  --ds-palette-brand-400: #60a5fa;
   --ds-palette-brand-600: #2563eb;
   --ds-palette-brand-700: #1d4ed8;
   --ds-palette-brand-800: #1e40af;
@@ -31,6 +34,12 @@
   --ds-palette-info-50: #f0f9ff;
   --ds-palette-info-200: #bae6fd;
   --ds-palette-info-800: #075985;
+  --ds-palette-forest-50: #f2f8f3;
+  --ds-palette-forest-100: #dcefdf;
+  --ds-palette-forest-200: #b9ddc0;
+  --ds-palette-forest-600: #2f7a45;
+  --ds-palette-forest-700: #25633a;
+  --ds-palette-forest-800: #1d4e2f;
   --ds-color-surface: var(--ds-palette-neutral-0);
   --ds-color-surface-muted: var(--ds-palette-neutral-50);
   --ds-color-surface-sunken: var(--ds-palette-neutral-100);

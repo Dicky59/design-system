@@ -105,6 +105,43 @@ export const InsideCard: Story = {
   ),
 };
 
+/** Narrow container: the table scrolls, with an edge shadow on the right that fades at the end of the scroll. */
+export const ScrollsHorizontally: Story = {
+  decorators: [
+    (Story) => (
+      <div className="max-w-xs">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <Table {...args}>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Asiakas</TableHead>
+          <TableHead>Yhteyshenkilö</TableHead>
+          <TableHead>Kaupunki</TableHead>
+          <TableHead>Tila</TableHead>
+          <TableHead numeric>Avoimet laskut</TableHead>
+          <TableHead>Viimeisin lasku</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {customers.map((c) => (
+          <TableRow key={c.id}>
+            <TableCell rowHeader>{c.name}</TableCell>
+            <TableCell>Mikko Virtanen</TableCell>
+            <TableCell>{c.city}</TableCell>
+            <TableCell>{c.status}</TableCell>
+            <TableCell numeric>{euro.format(c.balance)}</TableCell>
+            <TableCell>28.10.2026</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ),
+};
+
 export const Sortable: Story = { render: () => <SortableTable /> };
 
 export const Empty: Story = {

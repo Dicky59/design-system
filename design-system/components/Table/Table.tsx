@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "../../lib/cn";
 import { IconArrowDown, IconArrowUp } from "../../lib/icons";
 import { focusRing, type NativeProps } from "../../lib/styles";
@@ -28,35 +28,76 @@ export interface TableProps extends NativeProps<"table"> {
 /**
  * Data table. Compose with TableHeader, TableBody, TableRow, TableHead, TableCell and TableEmpty.
  * Scrolls horizontally on narrow screens; the scroll wrapper is a keyboard focusable `region` labelled
- * "<caption>, vieritettävä".
+ * "<caption>, vieritettävä", with an edge shadow on the side that has more content.
  * @a11y Caption is required. Use TableHead (scope="col") for column headings and TableCell rowHeader for row headings.
  */
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   { caption, captionHidden = false, variant = "bordered", children, ...rest },
   ref,
 ) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [overflow, setOverflow] = useState({ start: false, end: false });
+
+  // Edge cues show on the side that has more content to scroll to.
+  const updateOverflow = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const start = el.scrollLeft > 0;
+    const end = el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
+    setOverflow((current) => (current.start === start && current.end === end ? current : { start, end }));
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(updateOverflow);
+    observer.observe(el);
+    if (el.firstElementChild) observer.observe(el.firstElementChild);
+    return () => observer.disconnect();
+  });
+
   return (
-    <div
-      role="region"
-      aria-label={`${caption}, vieritettävä`}
-      tabIndex={0}
-      className={cn("overflow-x-auto bg-surface", variant === "bordered" && "rounded-lg border border-border", focusRing)}
-    >
-      <table ref={ref} className="w-full border-collapse text-left text-sm text-content" {...rest}>
-        <caption
-          className={
-            captionHidden
-              ? "sr-only"
-              : cn("py-3 text-left text-base font-semibold text-content", variant === "bordered" ? "px-4" : "px-0")
-          }
-        >
-          {caption}
-        </caption>
-        {children}
-      </table>
+    <div className="relative">
+      <div
+        ref={scrollRef}
+        role="region"
+        aria-label={`${caption}, vieritettävä`}
+        tabIndex={0}
+        onScroll={updateOverflow}
+        className={cn("overflow-x-auto bg-surface", variant === "bordered" && "rounded-lg border border-border", focusRing)}
+      >
+        <table ref={ref} className="w-full border-collapse text-left text-sm text-content" {...rest}>
+          <caption
+            className={
+              captionHidden
+                ? "sr-only"
+                : cn("py-3 text-left text-base font-semibold text-content", variant === "bordered" ? "px-4" : "px-0")
+            }
+          >
+            {caption}
+          </caption>
+          {children}
+        </table>
+      </div>
+      <ScrollCue side="start" visible={overflow.start} />
+      <ScrollCue side="end" visible={overflow.end} />
     </div>
   );
 });
+
+/** Decorative edge shadow that shows there is more content to scroll to. Hidden from assistive technology. */
+function ScrollCue({ side, visible }: { side: "start" | "end"; visible: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute inset-y-0 w-6 from-border-strong to-transparent transition-opacity motion-reduce:transition-none",
+        side === "start" ? "left-0 bg-gradient-to-r" : "right-0 bg-gradient-to-l",
+        visible ? "opacity-30" : "opacity-0",
+      )}
+    />
+  );
+}
 
 export interface TableHeaderProps extends NativeProps<"thead"> {
   children: ReactNode;

@@ -68,6 +68,12 @@ Sortable column (the view owns the sorting state):
 </Card>
 ```
 
+## Horizontal scroll cue
+
+When the table is wider than its container (typically on phones) it scrolls horizontally. A soft edge shadow appears on the side that has more content, and fades out when you reach that end. It is automatic: it needs no props, uses the `border-strong` token, and the fade is disabled with `prefers-reduced-motion`. The cue is decorative (`aria-hidden`, not clickable); the scroll region itself keeps `role="region"`, `tabindex="0"` and its `aria-label`, so keyboard users can scroll with the arrow keys.
+
+Still keep important columns on the left and prefer fewer columns; the cue helps discovery but does not replace a good mobile layout.
+
 ## Do
 
 - Always give a `caption`. Use `captionHidden` when a heading right above already shows the same text.
@@ -90,4 +96,5 @@ Sortable column (the view owns the sorting state):
 
 - The scroll wrapper has `role="region"`, `tabindex="0"` and an `aria-label` built from the caption: "<caption>, vieritettävä" (for example "Asiakaslista, vieritettävä"). Screen reader users hear that the area scrolls, and keyboard users can focus it and scroll with the arrow keys. The label is generated; don't add your own.
 - Column headings use `scope="col"`; sortable headings are real buttons and set `aria-sort` plus an arrow icon.
+- The scroll edge shadows are `aria-hidden` and do not take pointer events or focus.
 - Row hover is decorative; nothing is conveyed by it alone.

@@ -811,7 +811,7 @@
     },
     {
       "name": "Table",
-      "description": "Data table. Compose with TableHeader, TableBody, TableRow, TableHead, TableCell and TableEmpty. Scrolls horizontally on narrow screens; the scroll wrapper is a keyboard focusable `region` labelled \"<caption>, vieritettävä\".",
+      "description": "Data table. Compose with TableHeader, TableBody, TableRow, TableHead, TableCell and TableEmpty. Scrolls horizontally on narrow screens; the scroll wrapper is a keyboard focusable `region` labelled \"<caption>, vieritettävä\", with an edge shadow on the side that has more content.",
       "guide": "design-system/components/Table/Table.md",
       "source": "design-system/components/Table/Table.tsx",
       "story": "design-system/components/Table/Table.stories.tsx",

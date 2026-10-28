@@ -116,7 +116,7 @@ From `docs/specs/customers.md`, one commit per step:
 | `npm test` | Vitest: every story in headless Chromium with axe, once per theme, plus unit tests for the Customers logic |
 | `npm run test:e2e` | Playwright against the production build at 375 px and 1280 px: axe in all states and all themes, keyboard and focus tests, theme persistence |
 | `npm run verify` | `check` + `typecheck` + `lint` + `test` + `test:e2e`; run before every commit |
-| `npm run screenshots` | Build, start, and capture `docs/screenshots/` (all states, and the default view in each theme) |
+| `npm run screenshots` | Build, start, and capture `docs/screenshots/` (all states, and in each theme the default view, the open Select, the dialogs and the alerts) |
 
 First run needs a browser: `npx playwright install chromium`.
 

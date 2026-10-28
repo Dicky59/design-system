@@ -162,6 +162,102 @@
       ]
     },
     {
+      "name": "Card",
+      "description": "Bordered surface that groups related content. Compose with CardHeader, CardTitle, CardContent and CardFooter.",
+      "guide": "design-system/components/Card/Card.md",
+      "source": "design-system/components/Card/Card.tsx",
+      "story": "design-system/components/Card/Card.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "A Card is a plain container. Give it a CardTitle so the group has a heading."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": [
+        {
+          "name": "CardContent",
+          "description": "Main body of a Card.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "CardFooter",
+          "description": "Bottom section of a Card for actions, right-aligned.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "CardHeader",
+          "description": "Top section of a Card. Usually holds a CardTitle and optionally a Badge or Button on the right.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "CardTitle",
+          "description": "Heading of a Card.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            },
+            {
+              "name": "level",
+              "type": "2| 3 | 4",
+              "required": true,
+              "description": "Heading level. Choose the level that continues the page outline without skipping levels.",
+              "a11y": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [
+              "level"
+            ],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        }
+      ]
+    },
+    {
       "name": "Input",
       "description": "Single-line text field with built-in label, hint and error message.",
       "guide": "design-system/components/Input/Input.md",

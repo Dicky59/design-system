@@ -6,8 +6,16 @@ A design system built so that an LLM can use it without guessing, and a Finnish 
 
 **Why this project (EN):** AI-generated UI often looks fine but breaks the design system: invented colors, hand-built buttons, missing accessibility. Here the system is built so the wrong thing is hard to do: token-only styling, a machine-readable component index, and checks that fail bad changes. The proof is a customers view that Claude Code built from a written spec.
 
-- **Live demo:** `<DEMO_URL>` (placeholder, fill in after deploy)
-- **Storybook:** `<STORYBOOK_URL>` (placeholder, fill in after deploy)
+<p align="center">
+  <img src="docs/screenshots/customers-theme-default-1280.png" alt="Customers view, default theme" width="32%">
+  <img src="docs/screenshots/customers-theme-forest-1280.png" alt="Customers view, forest theme" width="32%">
+  <img src="docs/screenshots/customers-theme-dark-1280.png" alt="Customers view, dark theme" width="32%">
+</p>
+
+- **Live demo:** https://design-system-llm.vercel.app/customers
+- **Storybook:** https://design-system-llm-storybook-xi.vercel.app/
+
+Designed and directed by Pekka Laine, built with Claude Code.
 
 ## Screenshots
 

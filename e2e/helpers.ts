@@ -5,7 +5,8 @@ export const CUSTOMER = "Länsi-Suomen Rakennus Oy";
 /** Opens /customers and waits until the simulated load has finished (or the error state is shown). */
 export async function openCustomers(page: Page, query = "") {
   await page.goto(`/customers${query}`);
-  if (query.includes("state=error")) await expect(page.getByRole("alert")).toBeVisible();
+  // Wait for the message itself: Next.js has its own (empty) role="alert" route announcer on every page.
+  if (query.includes("state=error")) await expect(page.getByText("Asiakkaiden lataus epäonnistui.")).toBeVisible();
   else await expect(page.getByText(/Näytetään \d+ \/ \d+ asiakasta/)).toBeVisible();
 }
 

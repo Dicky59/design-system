@@ -26,6 +26,7 @@ import {
 import { CustomerDetailsDialog } from "./CustomerDetailsDialog";
 import { MOCK_CUSTOMERS } from "./data/customers";
 import { NewCustomerDialog } from "./NewCustomerDialog";
+import { ThemeSelect } from "../theme/ThemeSelect";
 import {
   CUSTOMER_STATUS_LABEL,
   CUSTOMER_STATUS_TONE,
@@ -117,7 +118,10 @@ export function CustomersView({ forceError }: Props) {
   return (
     <Page>
       <PageHeader title="Asiakkaat">
-        <NewCustomerDialog onCreate={addCustomer} />
+        <Stack direction="row" align="end" gap="3">
+          <ThemeSelect />
+          <NewCustomerDialog onCreate={addCustomer} />
+        </Stack>
       </PageHeader>
 
       {showAdded ? (

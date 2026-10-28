@@ -156,9 +156,9 @@ Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 3 (token th
 
 ## Deployment (Vercel, two projects)
 
-Both builds are verified from a clean clone (`npm ci`, `npm run build`, `npm run build-storybook`). Nothing is deployed yet. The repo has no `vercel.json` on purpose: it would apply to both projects, so each project is configured in its Vercel settings.
+Both projects are deployed on Vercel: the [app](https://design-system-llm.vercel.app/customers) and [Storybook](https://design-system-llm-storybook-xi.vercel.app/). Both builds are verified from a clean clone (`npm ci`, `npm run build`, `npm run build-storybook`). The repo has no `vercel.json` on purpose: it would apply to both projects, so each project is configured in its Vercel settings.
 
-Create two Vercel projects from the same Git repository:
+To recreate them, make two Vercel projects from the same Git repository:
 
 | | App | Storybook |
 |---|---|---|
@@ -175,7 +175,6 @@ Steps:
 1. Push the repository to GitHub.
 2. In Vercel, **Add New... > Project**, import the repository, keep the Next.js preset and deploy. This is the app.
 3. Add a second project from the same repository. Set the framework preset to **Other** and override the build command and output directory as in the table. This is Storybook.
-4. Copy both URLs into the placeholders at the top of this README (`<DEMO_URL>`, `<STORYBOOK_URL>`).
 
 The app redirects `/` to `/customers` (see `next.config.ts`). Both builds run `tokens:build` first (`prebuild` and `prebuild-storybook`), so `tokens.css` is always fresh.
 

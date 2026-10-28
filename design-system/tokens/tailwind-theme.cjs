@@ -33,6 +33,17 @@ module.exports = {
     ]),
   ),
   fontWeight: mapRefs(t.font.weight, "font-weight"),
+  // Named data-attribute variants (e.g. `data-active:`) for Radix state attributes, so views and
+  // components never need arbitrary `data-[...]` variants.
+  data: {
+    active: 'state="active"',
+    open: 'state="open"',
+    closed: 'state="closed"',
+    checked: 'state="checked"',
+    highlighted: "highlighted",
+    disabled: "disabled",
+    placeholder: "placeholder",
+  },
   // Media queries cannot use var(), so breakpoints are read from the JSON directly.
   screens: { ...t.breakpoint },
 };

@@ -115,11 +115,11 @@
   --ds-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
   --ds-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.06);
   --ds-z-base: 0;
-  --ds-z-dropdown: 1000;
   --ds-z-sticky: 1100;
   --ds-z-overlay: 1200;
   --ds-z-modal: 1300;
-  --ds-z-toast: 1400;
+  --ds-z-popover: 1400;
+  --ds-z-toast: 1500;
   --ds-breakpoint-sm: 640px;
   --ds-breakpoint-md: 768px;
   --ds-breakpoint-lg: 1024px;

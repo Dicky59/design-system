@@ -170,6 +170,98 @@
       },
       "acceptsNativeAttributes": true,
       "parts": []
+    },
+    {
+      "name": "Select",
+      "description": "Dropdown for choosing one option, with built-in label, hint and error message.",
+      "guide": "design-system/components/Select/Select.md",
+      "source": "design-system/components/Select/Select.tsx",
+      "story": "design-system/components/Select/Select.stories.tsx",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Initial value when uncontrolled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean| undefined",
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Error message. Marks the control invalid and links the message to it.",
+          "a11y": true
+        },
+        {
+          "name": "hint",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Helper text linked with `aria-describedby`."
+        },
+        {
+          "name": "id",
+          "type": "string| undefined",
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Visible label, in Finnish.",
+          "a11y": true
+        },
+        {
+          "name": "name",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Form field name; a hidden native select is rendered so the value is submitted with the form."
+        },
+        {
+          "name": "onValueChange",
+          "type": "((value:string) => void) | undefined",
+          "required": false,
+          "description": "Called with the chosen option value."
+        },
+        {
+          "name": "options",
+          "type": "SelectOption[]",
+          "required": true,
+          "description": "Choices. Keep the list short; for long lists add search first."
+        },
+        {
+          "name": "placeholder",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Text shown when nothing is selected.",
+          "default": "\"Valitse\""
+        },
+        {
+          "name": "required",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Marks the field as required and shows an asterisk."
+        },
+        {
+          "name": "value",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Controlled value."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [
+          "label"
+        ],
+        "notes": [
+          "Keyboard: Enter/Space/arrows open the list, arrows move, type-ahead jumps, Esc closes."
+        ]
+      },
+      "acceptsNativeAttributes": false,
+      "parts": []
     }
   ]
 }

@@ -50,3 +50,7 @@ storybook-static
 # editors
 .vscode/
 .idea/
+
+# playwright
+/test-results/
+/playwright-report/

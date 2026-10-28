@@ -1,4 +1,5 @@
-// Captures /customers at real viewport sizes (375 px and 1280 px) into docs/screenshots/.
+// Captures /customers at real viewport sizes (375 px and 1280 px) into docs/screenshots/,
+// including the default view in every theme from tokens.json.
 // Builds and starts the production app itself. Usage: npm run screenshots
 //
 // Deterministic output: fixed demo data (DEMO_TODAY), reduced motion + animations disabled,
@@ -13,6 +14,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = path.join(root, "docs", "screenshots");
 const PORT = 3100;
 const BASE = `http://localhost:${PORT}`;
+const themeIds = Object.keys(JSON.parse(fs.readFileSync(path.join(root, "design-system/tokens/tokens.json"), "utf8")).themes);
 const CUSTOMER = "Länsi-Suomen Rakennus Oy"; // has an overdue invoice, good for the invoices tab
 
 const viewports = [
@@ -103,6 +105,15 @@ try {
 
     await openLoaded(page, "?state=error");
     await capture(page, `customers-error-${name}.png`, { fullPage: true });
+
+    // The default view in every theme (the theme is saved in localStorage, like the selector does).
+    for (const theme of themeIds) {
+      await page.evaluate((id) => localStorage.setItem("ds-theme", id), theme);
+      await openLoaded(page);
+      await page.getByRole("combobox", { name: "Teema" }).waitFor();
+      await capture(page, `customers-theme-${theme}-${name}.png`, { fullPage: true });
+    }
+    await page.evaluate(() => localStorage.removeItem("ds-theme"));
 
     await context.close();
   }

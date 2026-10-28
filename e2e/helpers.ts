@@ -12,3 +12,8 @@ export async function openCustomers(page: Page, query = "") {
 export const nameButton = (page: Page, name = CUSTOMER) => page.getByRole("button", { name: `Avaa tiedot: ${name}` });
 
 export const addCustomerButton = (page: Page) => page.getByRole("button", { name: "Lisää asiakas" });
+
+/** Saves the theme the way the selector does, before the page loads (also exercises the no-flash script). */
+export async function useTheme(page: Page, theme: string) {
+  await page.addInitScript((id) => localStorage.setItem("ds-theme", id), theme);
+}

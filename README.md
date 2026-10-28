@@ -184,7 +184,7 @@ The app redirects `/` to `/customers` (see `next.config.ts`). Both builds run `t
 - Loading (about 500 ms) and the error state are simulated. `?state=error` shows the error on the first load; "Yritä uudelleen" then succeeds.
 - Finnish only; text is hardcoded, there is no i18n layer.
 - Themes: the dark and forest values were chosen by contrast numbers, not by a designer. The theme follows the saved choice only; it does not follow the OS `prefers-color-scheme`.
-- Select focus on error: the form moves focus to the first invalid field by `id`, and `Select` supports `id` and `ref`, so this works. The Customers form has no validation on its Select, so that path is not exercised in the UI.
+- The Customers form has no Select validation, so focus-on-error for Select is not exercised in the UI.
 - Screenshots are stable on one machine; fonts are the system font stack, so other operating systems render slightly differently.
 - Not audited with a screen reader: axe and keyboard tests only.
 

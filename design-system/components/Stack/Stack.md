@@ -51,6 +51,7 @@ Action row:
 - Pick `gap` by relationship: `2` between related controls, `3`/`4` between fields, `6`/`8` between sections.
 - Use `switchAt` instead of writing responsive classes. Below the breakpoint children are stacked (mobile-first).
 - Nest Stacks for two-dimensional layouts.
+- Use `fill` for rows of form fields (filters, address parts) that should share the width equally; combine with `switchAt` so they stack on mobile.
 
 ## Don't
 

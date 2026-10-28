@@ -58,7 +58,7 @@ Sortable column (the view owns the sorting state):
 ## Variants
 
 - `bordered` (default): the table draws its own border and rounded corners. Use it on the page background or in a Dialog.
-- `flush`: no border or rounding. Use it inside a `Card`, which already has a border, to avoid a double border.
+- `flush`: no border, rounding or caption side padding. Use it inside a `Card`, which already has a border, to avoid a double border. The caption and the table edges then line up with the Card content edge (and with a `CardTitle` above), at every width. In a `bordered` table the caption is indented 16 px to sit inside the border.
 
 ```tsx
 <Card>

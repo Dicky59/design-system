@@ -6,7 +6,8 @@ import { focusRing, type NativeProps } from "../../lib/styles";
 export interface TableProps extends NativeProps<"table"> {
   /**
    * `bordered` draws its own border and rounded corners. `flush` has none: use it inside a Card, which already
-   * provides the border, so there is no double border.
+   * provides the border, so there is no double border. The caption then has no side padding, so it lines up
+   * with the Card title and the table edges line up with the Card content edge.
    * @default "bordered"
    */
   variant?: "bordered" | "flush";
@@ -43,7 +44,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     >
       <table ref={ref} className="w-full border-collapse text-left text-sm text-content" {...rest}>
         <caption
-          className={captionHidden ? "sr-only" : "px-4 py-3 text-left text-base font-semibold text-content"}
+          className={
+            captionHidden
+              ? "sr-only"
+              : cn("py-3 text-left text-base font-semibold text-content", variant === "bordered" ? "px-4" : "px-0")
+          }
         >
           {caption}
         </caption>

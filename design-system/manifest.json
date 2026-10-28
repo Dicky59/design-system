@@ -840,7 +840,7 @@
           "name": "variant",
           "type": "\"bordered\"| \"flush\"",
           "required": false,
-          "description": "`bordered` draws its own border and rounded corners. `flush` has none: use it inside a Card, which already provides the border, so there is no double border.",
+          "description": "`bordered` draws its own border and rounded corners. `flush` has none: use it inside a Card, which already provides the border, so there is no double border. The caption then has no side padding, so it lines up with the Card title and the table edges line up with the Card content edge.",
           "default": "\"bordered\""
         }
       ],

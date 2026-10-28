@@ -17,11 +17,14 @@ const buttonStyles = cva(
           "border border-border-strong bg-surface text-content hover:bg-surface-muted active:bg-surface-sunken",
         ghost: "bg-transparent text-primary-subtle-text hover:bg-primary-subtle active:bg-primary-subtle-hover",
         danger: "bg-danger-solid text-danger-solid-text hover:bg-danger-solid-hover active:bg-danger-solid-active",
+        link: "rounded-sm text-left font-medium text-primary-subtle-text underline-offset-2 hover:underline",
       },
       size: {
         sm: "h-8 px-3 text-sm",
         md: "h-10 px-4 text-sm",
         lg: "h-12 px-6 text-base",
+        // Used by the `link` variant only: no fixed height or padding, it flows with the surrounding text.
+        inline: "text-sm",
       },
       iconOnly: {
         true: "px-0",
@@ -39,10 +42,11 @@ const buttonStyles = cva(
 
 interface ButtonBaseProps {
   /**
-   * Visual emphasis. Use one `primary` per view area; `danger` for destructive actions.
+   * Visual emphasis. Use one `primary` per view area; `danger` for destructive actions; `link` for an inline
+   * action that looks like text, e.g. a customer name that opens its details. `link` ignores `size`.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "ghost" | "danger";
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "link";
   /**
    * Control height.
    * @default "md"
@@ -72,7 +76,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       type={type}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
-      className={buttonStyles({ variant, size })}
+      className={buttonStyles({ variant, size: variant === "link" ? "inline" : size })}
       {...rest}
     >
       {loading ? <IconSpinner /> : null}
@@ -81,7 +85,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
 });
 
-export interface IconButtonProps extends ButtonBaseProps, NativeProps<"button"> {
+export interface IconButtonProps extends Omit<ButtonBaseProps, "variant">, NativeProps<"button"> {
+  /**
+   * Visual emphasis. Use one `primary` per view area; `danger` for destructive actions.
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "ghost" | "danger";
   /**
    * Accessible name in Finnish, e.g. "Poista asiakas".
    * @a11y Required: there is no visible text.

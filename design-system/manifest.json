@@ -128,14 +128,15 @@
         },
         {
           "name": "variant",
-          "type": "\"danger\"| \"primary\" | \"secondary\" | \"ghost\"",
+          "type": "\"link\"| \"danger\" | \"primary\" | \"secondary\" | \"ghost\"",
           "required": false,
-          "description": "Visual emphasis. Use one `primary` per view area; `danger` for destructive actions.",
+          "description": "Visual emphasis. Use one `primary` per view area; `danger` for destructive actions; `link` for an inline action that looks like text, e.g. a customer name that opens its details. `link` ignores `size`.",
           "default": "\"primary\""
         }
       ],
       "variants": {
         "variant": [
+          "link",
           "danger",
           "primary",
           "secondary",

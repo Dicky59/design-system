@@ -12,12 +12,14 @@ See `design-system/manifest.json` for the full list. Key props:
 
 | Prop | Values | Default |
 |---|---|---|
-| `variant` | `primary`, `secondary`, `ghost`, `danger` | `primary` |
+| `variant` | `primary`, `secondary`, `ghost`, `danger`, `link` | `primary` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `loading` | `boolean` | `false` |
 | `type` | native button type | `button` |
 
 `IconButton` has the same `variant`/`size`/`loading` and requires `aria-label` (Finnish) and `icon`.
+
+`link` looks like text (primary color, underline on hover) and ignores `size`. Use it when the action is a piece of content, such as a customer name in a table that opens a details dialog. It is still a real `button`: give it an `aria-label` that starts with the verb when the visible text alone does not say what happens ("Avaa tiedot: Pohjoinen Kone Oy"). `IconButton` has no `link` variant.
 
 ## Examples
 
@@ -36,6 +38,16 @@ Submit button that shows progress:
 <Button type="submit" loading={isSaving}>
   {isSaving ? "Tallennetaan" : "Tallenna"}
 </Button>
+```
+
+Table cell that opens details:
+
+```tsx
+<TableCell rowHeader>
+  <Button variant="link" aria-label={`Avaa tiedot: ${name}`} onClick={() => open(customer)}>
+    {name}
+  </Button>
+</TableCell>
 ```
 
 Icon-only control:
@@ -58,6 +70,7 @@ Icon-only control:
 - Don't put several `primary` buttons side by side.
 - Don't use `loading` and also swap the label to something unrelated; keep it recognizable ("Tallennetaan").
 - Don't use a Button for page navigation.
+- Don't use `link` for the main action of a view area or for several actions in a row; use `ghost` or `secondary`.
 - Don't use color alone to communicate danger; the label must say what happens ("Poista asiakas", not "OK").
 
 ## Accessibility

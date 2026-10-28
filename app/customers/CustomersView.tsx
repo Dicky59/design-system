@@ -39,7 +39,7 @@ import { formatCurrency, formatDate } from "./lib/format";
 import type { Customer, NewCustomerValues, SortDirection, SortKey, StatusFilter } from "./types";
 
 const LOAD_DELAY_MS = 500;
-const COLUMN_COUNT = 6;
+const COLUMN_COUNT = 5;
 const SKELETON_ROWS = 5;
 
 const STATUS_FILTER_OPTIONS = [
@@ -184,7 +184,6 @@ export function CustomersView({ forceError }: Props) {
                       >
                         Viimeisin lasku
                       </TableHead>
-                      <TableHead>Toiminnot</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -214,8 +213,14 @@ export function CustomersView({ forceError }: Props) {
                       visible.map((customer) => (
                         <TableRow key={customer.id}>
                           <TableCell rowHeader>
-                            <Stack gap="1">
-                              <span>{customer.name}</span>
+                            <Stack gap="1" align="start">
+                              <Button
+                                variant="link"
+                                aria-label={`Avaa tiedot: ${customer.name}`}
+                                onClick={(event) => openDetails(customer, event.currentTarget)}
+                              >
+                                {customer.name}
+                              </Button>
                               <span className="text-sm font-regular text-content-muted">{customer.businessId}</span>
                             </Stack>
                           </TableCell>
@@ -228,16 +233,6 @@ export function CustomersView({ forceError }: Props) {
                           <TableCell numeric>{formatCurrency(customer.openInvoicesTotal)}</TableCell>
                           <TableCell>
                             {customer.lastInvoiceDate ? formatDate(customer.lastInvoiceDate) : "–"}
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              aria-label={`Avaa tiedot: ${customer.name}`}
-                              onClick={(event) => openDetails(customer, event.currentTarget)}
-                            >
-                              Avaa tiedot
-                            </Button>
                           </TableCell>
                         </TableRow>
                       ))

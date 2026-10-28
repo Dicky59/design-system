@@ -43,7 +43,7 @@ Status labels (Badge): `active` = "Aktiivinen" (success), `new` = "Uusi" (info),
 2. Card containing filters: search Input (label "Hae asiakasta", hint "Nimi tai Y-tunnus") and status Select (label "Tila", options: "Kaikki", plus the four statuses).
 3. Card containing the customer Table:
    - Required caption (visually accessible): "Asiakaslista".
-   - Columns: Asiakas (name + Y-tunnus below), Yhteyshenkilö, Tila (Badge), Avoimet laskut (EUR, right-aligned), Viimeisin lasku (date), and an action column with a ghost Button "Avaa tiedot" (include the customer name in the accessible label).
+   - Columns: Asiakas (name + Y-tunnus below), Yhteyshenkilö, Tila (Badge), Avoimet laskut (EUR, right-aligned), Viimeisin lasku (date). The customer name is a `link` Button that opens the details dialog; its accessible name is "Avaa tiedot: <name>" (there is no separate action column, so nothing is off-screen on small screens).
    - Sortable headers with `aria-sort`: Asiakas, Avoimet laskut, Viimeisin lasku.
    - Result count text under the table: "Näytetään 8 / 12 asiakasta".
 4. Success Alert after adding a customer: "Asiakas lisätty." (dismissible, role status).
@@ -105,7 +105,7 @@ Button, Input, Select, Badge, Card, Table, Tabs, Dialog, Alert. No new component
 | Search label / hint | Hae asiakasta / Nimi tai Y-tunnus |
 | Status filter | Tila: Kaikki, Aktiivinen, Uusi, Erääntynyt, Ei aktiivinen |
 | Table caption | Asiakaslista |
-| Row action | Avaa tiedot |
+| Customer name button (accessible name) | Avaa tiedot: <nimi> |
 | Result count | Näytetään 8 / 12 asiakasta |
 | Empty | Ei hakua vastaavia asiakkaita. / Tyhjennä suodattimet |
 | Loading | Ladataan asiakkaita... |

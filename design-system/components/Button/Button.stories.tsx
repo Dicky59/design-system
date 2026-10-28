@@ -19,6 +19,7 @@ export const Variants: Story = {
       <Button variant="primary">Lähetä lasku</Button>
       <Button variant="secondary">Peruuta</Button>
       <Button variant="ghost">Näytä lisää</Button>
+      <Button variant="link">Pohjoinen Kone Oy</Button>
       <Button variant="danger">Poista asiakas</Button>
     </div>
   ),

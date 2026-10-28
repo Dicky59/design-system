@@ -12,7 +12,7 @@ import {
 
 | Part | Renders | Notes |
 |---|---|---|
-| `Table` | `table` in a scroll region | `caption` is required; `captionHidden` hides it visually |
+| `Table` | `table` in a scroll region | `caption` is required; `captionHidden` hides it visually; `variant` is `bordered` (default) or `flush` |
 | `TableHeader` | `thead` | One `TableRow` of `TableHead` |
 | `TableBody` | `tbody` | `TableRow`s, or one `TableEmpty` |
 | `TableRow` | `tr` | |
@@ -55,6 +55,19 @@ Sortable column (the view owns the sorting state):
 <TableHead sortDirection={sort.dir} onSort={() => toggleSort("name")}>Asiakas</TableHead>
 ```
 
+## Variants
+
+- `bordered` (default): the table draws its own border and rounded corners. Use it on the page background or in a Dialog.
+- `flush`: no border or rounding. Use it inside a `Card`, which already has a border, to avoid a double border.
+
+```tsx
+<Card>
+  <CardContent>
+    <Table caption="Asiakaslista" variant="flush">...</Table>
+  </CardContent>
+</Card>
+```
+
 ## Do
 
 - Always give a `caption`. Use `captionHidden` when a heading right above already shows the same text.
@@ -65,6 +78,7 @@ Sortable column (the view owns the sorting state):
 
 ## Don't
 
+- Don't put a `bordered` Table inside a Card; use `flush`.
 - Don't build tables from `div`s or raw `<table>` in a view.
 - Don't put interactive controls in every cell without labels. Name them with context ("Muokkaa asiakasta Pohjoinen Kone Oy").
 - Don't convey status by color alone; use Badge with text.

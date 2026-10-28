@@ -59,6 +59,7 @@ Icon-only control:
 ## Do
 
 - Use one `primary` button per view area. The rest are `secondary` or `ghost`.
+- Labels never wrap (`primary`, `secondary`, `ghost`, `danger`), so keep them short; only `link` can wrap.
 - Write labels as verb + object in sentence case: "Lisää asiakas", "Lähetä lasku".
 - Use `danger` only for destructive actions, and confirm them in a Dialog.
 - Set `type="submit"` explicitly on form submit buttons (the default is `button`).

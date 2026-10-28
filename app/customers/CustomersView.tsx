@@ -163,7 +163,7 @@ export function CustomersView({ forceError }: Props) {
           <Card>
             <CardContent>
               <Stack gap="3">
-                <Table caption="Asiakaslista">
+                <Table caption="Asiakaslista" variant="flush">
                   <TableHeader>
                     <TableRow>
                       <TableHead sortDirection={sortDirectionOf("name")} onSort={() => toggleSort("name")}>

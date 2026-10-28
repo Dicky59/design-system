@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import type { NativeProps } from "../../lib/styles";
 
 const badgeStyles = cva(
-  "inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-medium",
+  "inline-flex items-center whitespace-nowrap rounded-full border px-3 py-0.5 text-xs font-medium",
   {
     variants: {
       tone: {

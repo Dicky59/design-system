@@ -12,11 +12,11 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary text-primary-text hover:bg-primary-hover active:bg-primary-active",
+        primary: "whitespace-nowrap bg-primary text-primary-text hover:bg-primary-hover active:bg-primary-active",
         secondary:
-          "border border-border-strong bg-surface text-content hover:bg-surface-muted active:bg-surface-sunken",
-        ghost: "bg-transparent text-primary-subtle-text hover:bg-primary-subtle active:bg-primary-subtle-hover",
-        danger: "bg-danger-solid text-danger-solid-text hover:bg-danger-solid-hover active:bg-danger-solid-active",
+          "whitespace-nowrap border border-border-strong bg-surface text-content hover:bg-surface-muted active:bg-surface-sunken",
+        ghost: "whitespace-nowrap bg-transparent text-primary-subtle-text hover:bg-primary-subtle active:bg-primary-subtle-hover",
+        danger: "whitespace-nowrap bg-danger-solid text-danger-solid-text hover:bg-danger-solid-hover active:bg-danger-solid-active",
         link: "rounded-sm text-left font-medium text-primary-subtle-text underline-offset-2 hover:underline",
       },
       size: {

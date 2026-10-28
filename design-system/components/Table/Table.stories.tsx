@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, within } from "storybook/test";
 import { useState } from "react";
 import { Badge } from "../Badge/Badge";
+import { Card, CardContent } from "../Card/Card";
 import { Table, TableBody, TableCell, TableEmpty, TableHead, TableHeader, TableRow } from "./Table";
 
 const customers = [
@@ -78,6 +79,31 @@ function SortableTable() {
     </Table>
   );
 }
+
+export const InsideCard: Story = {
+  render: (args) => (
+    <Card>
+      <CardContent>
+        <Table {...args} variant="flush">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Asiakas</TableHead>
+              <TableHead>Kaupunki</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {customers.map((c) => (
+              <TableRow key={c.id}>
+                <TableCell rowHeader>{c.name}</TableCell>
+                <TableCell>{c.city}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  ),
+};
 
 export const Sortable: Story = { render: () => <SortableTable /> };
 

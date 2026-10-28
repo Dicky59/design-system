@@ -5,6 +5,12 @@ import { focusRing, type NativeProps } from "../../lib/styles";
 
 export interface TableProps extends NativeProps<"table"> {
   /**
+   * `bordered` draws its own border and rounded corners. `flush` has none: use it inside a Card, which already
+   * provides the border, so there is no double border.
+   * @default "bordered"
+   */
+  variant?: "bordered" | "flush";
+  /**
    * Short title that describes the table, in Finnish, e.g. "Asiakkaat".
    * @a11y Required: it is the accessible name of the table; the scroll region is named "<caption>, vieritettävä".
    */
@@ -25,7 +31,7 @@ export interface TableProps extends NativeProps<"table"> {
  * @a11y Caption is required. Use TableHead (scope="col") for column headings and TableCell rowHeader for row headings.
  */
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  { caption, captionHidden = false, children, ...rest },
+  { caption, captionHidden = false, variant = "bordered", children, ...rest },
   ref,
 ) {
   return (
@@ -33,7 +39,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
       role="region"
       aria-label={`${caption}, vieritettävä`}
       tabIndex={0}
-      className={cn("overflow-x-auto rounded-lg border border-border bg-surface", focusRing)}
+      className={cn("overflow-x-auto bg-surface", variant === "bordered" && "rounded-lg border border-border", focusRing)}
     >
       <table ref={ref} className="w-full border-collapse text-left text-sm text-content" {...rest}>
         <caption

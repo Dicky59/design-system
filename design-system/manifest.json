@@ -400,6 +400,180 @@
       },
       "acceptsNativeAttributes": false,
       "parts": []
+    },
+    {
+      "name": "Table",
+      "description": "Data table. Compose with TableHeader, TableBody, TableRow, TableHead, TableCell and TableEmpty. Scrolls horizontally on narrow screens; the scroll region is keyboard focusable.",
+      "guide": "design-system/components/Table/Table.md",
+      "source": "design-system/components/Table/Table.tsx",
+      "story": "design-system/components/Table/Table.stories.tsx",
+      "props": [
+        {
+          "name": "caption",
+          "type": "string",
+          "required": true,
+          "description": "Short title that describes the table, in Finnish, e.g. \"Asiakkaat\".",
+          "a11y": true
+        },
+        {
+          "name": "captionHidden",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Hide the caption visually (it stays available to screen readers). Use when a heading above already shows it.",
+          "default": "false"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "TableHeader and TableBody."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [
+          "caption"
+        ],
+        "notes": [
+          "Caption is required. Use TableHead (scope=\"col\") for column headings and TableCell rowHeader for row headings."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": [
+        {
+          "name": "TableBody",
+          "description": "Body group (`tbody`). Contains TableRow elements, or a TableEmpty row when there is no data.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "TableCell",
+          "description": "Data cell (`td`), or row heading when `rowHeader` is set.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false
+            },
+            {
+              "name": "numeric",
+              "type": "boolean| undefined",
+              "required": false,
+              "description": "Right-align with tabular figures; use for amounts, dates and counts."
+            },
+            {
+              "name": "rowHeader",
+              "type": "boolean| undefined",
+              "required": false,
+              "description": "Render as a row heading (`th scope=\"row\"`), e.g. the customer name column."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "TableEmpty",
+          "description": "Row shown inside TableBody when there is no data.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Finnish message, e.g. \"Ei asiakkaita.\" Say what to do next when possible."
+            },
+            {
+              "name": "colSpan",
+              "type": "number",
+              "required": true,
+              "description": "Number of columns in the table, so the message spans the full width."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "TableHead",
+          "description": "Column heading (`th scope=\"col\"`), optionally sortable.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            },
+            {
+              "name": "numeric",
+              "type": "boolean| undefined",
+              "required": false,
+              "description": "Right-align the column; use for amounts and counts."
+            },
+            {
+              "name": "onSort",
+              "type": "(()=> void) | undefined",
+              "required": false,
+              "description": "Called when the user activates the column heading. Makes the heading a button."
+            },
+            {
+              "name": "sortDirection",
+              "type": "\"ascending\"| \"descending\" | \"none\"",
+              "required": false,
+              "description": "Current sort state of this column. Omit for columns that cannot be sorted.",
+              "a11y": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "TableHeader",
+          "description": "Header group (`thead`). Contains one TableRow of TableHead cells.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        },
+        {
+          "name": "TableRow",
+          "description": "Table row. Highlights on hover.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        }
+      ]
     }
   ]
 }

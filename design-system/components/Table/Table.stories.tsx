@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect, within } from "storybook/test";
 import { useState } from "react";
 import { Badge } from "../Badge/Badge";
 import { Table, TableBody, TableCell, TableEmpty, TableHead, TableHeader, TableRow } from "./Table";
@@ -21,6 +22,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const region = within(canvasElement).getByRole("region", { name: "Asiakkaat, vieritettävä" });
+    await expect(region).toHaveAttribute("tabindex", "0");
+  },
   render: (args) => (
     <Table {...args}>
       <TableHeader>

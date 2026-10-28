@@ -74,6 +74,6 @@ Sortable column (the view owns the sorting state):
 
 ## Accessibility
 
-- The scroll region has `role="region"`, is labelled by the caption and is keyboard focusable, so wide tables can be scrolled by keyboard.
+- The scroll wrapper has `role="region"`, `tabindex="0"` and an `aria-label` built from the caption: "<caption>, vieritettävä" (for example "Asiakaslista, vieritettävä"). Screen reader users hear that the area scrolls, and keyboard users can focus it and scroll with the arrow keys. The label is generated; don't add your own.
 - Column headings use `scope="col"`; sortable headings are real buttons and set `aria-sort` plus an arrow icon.
 - Row hover is decorative; nothing is conveyed by it alone.

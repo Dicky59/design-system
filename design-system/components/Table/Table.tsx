@@ -1,4 +1,4 @@
-import { forwardRef, useId, type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import { cn } from "../../lib/cn";
 import { IconArrowDown, IconArrowUp } from "../../lib/icons";
 import { focusRing, type NativeProps } from "../../lib/styles";
@@ -6,7 +6,7 @@ import { focusRing, type NativeProps } from "../../lib/styles";
 export interface TableProps extends NativeProps<"table"> {
   /**
    * Short title that describes the table, in Finnish, e.g. "Asiakkaat".
-   * @a11y Required: it is the accessible name of the table and of its scroll region.
+   * @a11y Required: it is the accessible name of the table; the scroll region is named "<caption>, vieritettävä".
    */
   caption: string;
   /**
@@ -20,24 +20,23 @@ export interface TableProps extends NativeProps<"table"> {
 
 /**
  * Data table. Compose with TableHeader, TableBody, TableRow, TableHead, TableCell and TableEmpty.
- * Scrolls horizontally on narrow screens; the scroll region is keyboard focusable.
+ * Scrolls horizontally on narrow screens; the scroll wrapper is a keyboard focusable `region` labelled
+ * "<caption>, vieritettävä".
  * @a11y Caption is required. Use TableHead (scope="col") for column headings and TableCell rowHeader for row headings.
  */
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   { caption, captionHidden = false, children, ...rest },
   ref,
 ) {
-  const captionId = useId();
   return (
     <div
       role="region"
-      aria-labelledby={captionId}
+      aria-label={`${caption}, vieritettävä`}
       tabIndex={0}
       className={cn("overflow-x-auto rounded-lg border border-border bg-surface", focusRing)}
     >
       <table ref={ref} className="w-full border-collapse text-left text-sm text-content" {...rest}>
         <caption
-          id={captionId}
           className={captionHidden ? "sr-only" : "px-4 py-3 text-left text-base font-semibold text-content"}
         >
           {caption}

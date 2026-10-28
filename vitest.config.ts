@@ -16,7 +16,7 @@ const dirname =
 // .storybook/preview.tsx reads STORYBOOK_THEME to pick the theme.
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 const storybookProjects = THEMES.map(({ id }) => ({
-  extends: true,
+  extends: true as const,
   plugins: [
     // The plugin will run tests for the stories defined in your Storybook config
     // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
@@ -29,7 +29,7 @@ const storybookProjects = THEMES.map(({ id }) => ({
       enabled: true,
       headless: true,
       provider: playwright({}),
-      instances: [{ browser: 'chromium' }],
+      instances: [{ browser: 'chromium' as const }],
     },
   },
 }));

@@ -1,6 +1,7 @@
 // WCAG 2.2 contrast check for every theme in tokens.json.
 //   text pairs:         4.5:1 (SC 1.4.3)
 //   UI + focus pairs:   3:1   (SC 1.4.11, 2.4.13)
+//   link vs body text:  3:1   (SC 1.4.1, with an underline on hover and focus as the second cue)
 // Exits non-zero when any pair fails. Disabled text is exempt, and so is the overlay (it has alpha).
 // Usage: node check-contrast.mjs [--verbose]
 import { createRequire } from "node:module";
@@ -10,6 +11,7 @@ const { readTokens } = require("./tokens-lib.cjs");
 
 const TEXT = 4.5;
 const UI = 3;
+const LINK = 3;
 
 // [foreground, background[]] per requirement. Names are semantic color tokens.
 const TEXT_PAIRS = [
@@ -17,6 +19,7 @@ const TEXT_PAIRS = [
   ["content-muted", ["surface", "surface-muted", "surface-sunken"]],
   ["primary-text", ["primary", "primary-hover", "primary-active"]],
   ["primary-subtle-text", ["surface", "surface-muted", "primary-subtle", "primary-subtle-hover"]],
+  ["link", ["surface", "surface-muted"]], // `link` Button, also on the table row hover background
   ["danger-solid-text", ["danger-solid", "danger-solid-hover", "danger-solid-active"]],
   ["neutral-text", ["neutral-bg"]],
   ["success-text", ["success-bg"]],
@@ -31,6 +34,9 @@ const UI_PAIRS = [
   ["primary", ["surface"]], // filled button, active tab indicator
   ["danger-solid", ["surface"]], // invalid field border
 ];
+
+// A link next to ordinary text must differ from that text by color (3:1), not only by underline.
+const LINK_PAIRS = [["link", ["content"]]];
 
 function resolve(tokens, theme, name) {
   const value = theme.color?.[name] ?? tokens.color[name];
@@ -72,6 +78,7 @@ for (const [id, theme] of Object.entries(tokens.themes)) {
   if (verbose) console.log(`${id}:`);
   run(TEXT_PAIRS, TEXT, "text");
   run(UI_PAIRS, UI, "ui  ");
+  run(LINK_PAIRS, LINK, "link");
   failures.push(...themeFailures);
 }
 

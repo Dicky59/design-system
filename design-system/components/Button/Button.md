@@ -19,7 +19,7 @@ See `design-system/manifest.json` for the full list. Key props:
 
 `IconButton` has the same `variant`/`size`/`loading` and requires `aria-label` (Finnish) and `icon`.
 
-`link` looks like text (primary color, underline on hover) and ignores `size`. Use it when the action is a piece of content, such as a customer name in a table that opens a details dialog. It is still a real `button`: give it an `aria-label` that starts with the verb when the visible text alone does not say what happens ("Avaa tiedot: Pohjoinen Kone Oy"). `IconButton` has no `link` variant.
+`link` looks like text and ignores `size`. It uses the `link` color token, which is chosen per theme to differ from body text by at least 3:1 (checked by `npm run tokens:contrast`), and it is underlined on hover and on keyboard focus, so it is never identified by color alone. Use it when the action is a piece of content, such as a customer name in a table that opens a details dialog. It is still a real `button`: give it an `aria-label` that starts with the verb when the visible text alone does not say what happens ("Avaa tiedot: Pohjoinen Kone Oy"). `IconButton` has no `link` variant.
 
 ## Examples
 
@@ -71,6 +71,7 @@ Icon-only control:
 - Don't put several `primary` buttons side by side.
 - Don't use `loading` and also swap the label to something unrelated; keep it recognizable ("Tallennetaan").
 - Don't use a Button for page navigation.
+- Don't override or recolor a link; change the `link` token in `tokens.json` for a theme instead.
 - Don't use `link` for the main action of a view area or for several actions in a row; use `ghost` or `secondary`.
 - Don't use color alone to communicate danger; the label must say what happens ("Poista asiakas", not "OK").
 

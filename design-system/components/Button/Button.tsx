@@ -17,7 +17,7 @@ const buttonStyles = cva(
           "whitespace-nowrap border border-border-strong bg-surface text-content hover:bg-surface-muted active:bg-surface-sunken",
         ghost: "whitespace-nowrap bg-transparent text-primary-subtle-text hover:bg-primary-subtle active:bg-primary-subtle-hover",
         danger: "whitespace-nowrap bg-danger-solid text-danger-solid-text hover:bg-danger-solid-hover active:bg-danger-solid-active",
-        link: "rounded-sm text-left font-medium text-primary-subtle-text underline-offset-2 hover:underline",
+        link: "rounded-sm text-left font-medium text-link underline-offset-2 hover:underline focus-visible:underline",
       },
       size: {
         sm: "h-8 px-3 text-sm",

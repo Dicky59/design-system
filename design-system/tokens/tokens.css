@@ -17,6 +17,7 @@
   --ds-palette-brand-200: #bfdbfe;
   --ds-palette-brand-300: #93c5fd;
   --ds-palette-brand-400: #60a5fa;
+  --ds-palette-brand-500: #508cfa;
   --ds-palette-brand-600: #2563eb;
   --ds-palette-brand-700: #1d4ed8;
   --ds-palette-brand-800: #1e40af;
@@ -58,6 +59,7 @@
   --ds-color-primary-subtle: var(--ds-palette-brand-50);
   --ds-color-primary-subtle-hover: var(--ds-palette-brand-100);
   --ds-color-primary-subtle-text: var(--ds-palette-brand-800);
+  --ds-color-link: var(--ds-palette-brand-600);
   --ds-color-danger-solid: var(--ds-palette-danger-600);
   --ds-color-danger-solid-hover: var(--ds-palette-danger-700);
   --ds-color-danger-solid-active: var(--ds-palette-danger-800);
@@ -143,6 +145,7 @@
   --ds-color-primary-subtle: var(--ds-palette-forest-50);
   --ds-color-primary-subtle-hover: var(--ds-palette-forest-100);
   --ds-color-primary-subtle-text: var(--ds-palette-forest-800);
+  --ds-color-link: var(--ds-palette-forest-600);
   --ds-radius-sm: 0.125rem;
   --ds-radius-md: 0.1875rem;
   --ds-radius-lg: 0.25rem;
@@ -168,6 +171,7 @@
   --ds-color-primary-subtle: var(--ds-palette-brand-800);
   --ds-color-primary-subtle-hover: var(--ds-palette-brand-700);
   --ds-color-primary-subtle-text: var(--ds-palette-brand-200);
+  --ds-color-link: var(--ds-palette-brand-500);
   --ds-color-neutral-bg: var(--ds-palette-neutral-800);
   --ds-color-neutral-text: var(--ds-palette-neutral-200);
   --ds-color-neutral-border: var(--ds-palette-neutral-700);

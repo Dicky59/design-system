@@ -15,7 +15,11 @@
     "predev": "npm run tokens:build",
     "prebuild": "npm run tokens:build",
     "prestorybook": "npm run tokens:build",
-    "prebuild-storybook": "npm run tokens:build"
+    "prebuild-storybook": "npm run tokens:build",
+    "manifest:build": "node design-system/build-manifest.mjs",
+    "manifest:check": "node design-system/build-manifest.mjs --check",
+    "check": "npm run tokens:check && npm run manifest:check",
+    "verify": "npm run check && npm run typecheck && npm run lint"
   },
   "dependencies": {
     "next": "16.4.3",

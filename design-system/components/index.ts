@@ -9,3 +9,4 @@ export * from "./Tabs/Tabs";
 export * from "./Dialog/Dialog";
 export * from "./Alert/Alert";
 export * from "./Skeleton/Skeleton";
+export * from "./DescriptionList/DescriptionList";

@@ -74,7 +74,8 @@ Next.js App Router, TypeScript strict, Tailwind 3, Storybook.
 | `npm run check` | `tokens:check` + `manifest:check` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm run lint` | ESLint, including the style and import rules |
-| `npm run verify` | `check` + `typecheck` + `lint`; run before every commit |
+| `npm test` | Runs every story in headless Chromium, including axe accessibility checks |
+| `npm run verify` | `check` + `typecheck` + `lint` + `test`; run before every commit |
 
 ## Project layout
 

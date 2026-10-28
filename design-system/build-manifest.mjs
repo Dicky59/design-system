@@ -90,7 +90,9 @@ function describeExport(sourceFile, exportSymbol) {
     const propName = prop.getName();
     const type = checker.getTypeOfSymbolAtLocation(prop, declaration);
     const required = !(prop.flags & ts.SymbolFlags.Optional);
-    const entry = { name: propName, type: typeToString(type, declaration), required };
+    const values = literalValues(type);
+    const typeText = values ? values.map((v) => JSON.stringify(v)).join(" | ") : typeToString(type, declaration);
+    const entry = { name: propName, type: typeText.replace(/ | undefined$/, ""), required };
     const description = flatten(doc(prop));
     if (description) entry.description = description;
     const def = tagsNamed(prop, "default")[0];
@@ -102,7 +104,6 @@ function describeExport(sourceFile, exportSymbol) {
     }
     props.push(entry);
 
-    const values = literalValues(type);
     if (values && (propName === "variant" || propName === "tone")) variants[propName] = values;
     if (values && propName === "size") sizes = values;
   }

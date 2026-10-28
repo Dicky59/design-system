@@ -315,6 +315,53 @@
       ]
     },
     {
+      "name": "DescriptionList",
+      "description": "Read-only list of labelled values (term and definition), e.g. the basic details of a customer. Compose with DescriptionItem.",
+      "guide": "design-system/components/DescriptionList/DescriptionList.md",
+      "source": "design-system/components/DescriptionList/DescriptionList.tsx",
+      "story": "design-system/components/DescriptionList/DescriptionList.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "DescriptionItem elements."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Rendered as a native `dl`, so screen readers announce each term with its value."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": [
+        {
+          "name": "DescriptionItem",
+          "description": "One term and its value inside a DescriptionList. Stacked on narrow screens, side by side from `sm`.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "The value. Plain text, or a Badge for a status."
+            },
+            {
+              "name": "term",
+              "type": "string",
+              "required": true,
+              "description": "Label in Finnish, e.g. \"Y-tunnus\"."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": true
+        }
+      ]
+    },
+    {
       "name": "Dialog",
       "description": "Modal window for a focused task or a confirmation. Compose with DialogTrigger, DialogContent, DialogFooter and DialogClose.",
       "guide": "design-system/components/Dialog/Dialog.md",
@@ -513,6 +560,61 @@
       "parts": []
     },
     {
+      "name": "Page",
+      "description": "Page container: the `main` landmark with responsive padding, a centered maximum width and a gap between sections.",
+      "guide": "design-system/components/Page/Page.md",
+      "source": "design-system/components/Page/Page.tsx",
+      "story": "design-system/components/Page/Page.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "A PageHeader followed by the page's sections."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Renders the page's single `main` landmark. Use exactly one per page."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": []
+    },
+    {
+      "name": "PageHeader",
+      "description": "Top of a page: the `h1` title and optional page-level actions.",
+      "guide": "design-system/components/PageHeader/PageHeader.md",
+      "source": "design-system/components/PageHeader/PageHeader.tsx",
+      "story": "design-system/components/PageHeader/PageHeader.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Page-level actions on the right, usually one primary Button. They wrap below the title on narrow screens."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Page title in Finnish. Rendered as the page's only `h1`.",
+          "a11y": true
+        }
+      ],
+      "a11y": {
+        "requiredProps": [
+          "title"
+        ],
+        "notes": [
+          "Renders the only `h1` of the page. Do not use more than one PageHeader per page."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": []
+    },
+    {
       "name": "Select",
       "description": "Dropdown for choosing one option, with built-in label, hint and error message.",
       "guide": "design-system/components/Select/Select.md",
@@ -602,6 +704,108 @@
         ]
       },
       "acceptsNativeAttributes": false,
+      "parts": []
+    },
+    {
+      "name": "Skeleton",
+      "description": "Animated placeholder shown while content loads. Mirrors the layout of the content that will replace it.",
+      "guide": "design-system/components/Skeleton/Skeleton.md",
+      "source": "design-system/components/Skeleton/Skeleton.tsx",
+      "story": "design-system/components/Skeleton/Skeleton.stories.tsx",
+      "props": [
+        {
+          "name": "label",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Finnish loading message, e.g. \"Ladataan asiakkaita...\". Announced politely to screen readers.",
+          "a11y": true
+        },
+        {
+          "name": "variant",
+          "type": "\"text\"| \"block\"",
+          "required": false,
+          "description": "Shape of the placeholder: one line of text or a taller block (input, button, card).",
+          "default": "\"text\""
+        },
+        {
+          "name": "width",
+          "type": "\"sm\"| \"md\" | \"lg\" | \"full\"",
+          "required": false,
+          "description": "Width relative to the container.",
+          "default": "\"full\""
+        }
+      ],
+      "variants": {
+        "variant": [
+          "text",
+          "block"
+        ]
+      },
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Placeholders are decorative. Give one Skeleton per loading area a `label` so the loading state is announced."
+        ]
+      },
+      "acceptsNativeAttributes": true,
+      "parts": []
+    },
+    {
+      "name": "Stack",
+      "description": "Lays out its children in a row or column with a token-based gap. The only way for views to arrange things side by side or one above the other; it can switch from column to row at a breakpoint.",
+      "guide": "design-system/components/Stack/Stack.md",
+      "source": "design-system/components/Stack/Stack.tsx",
+      "story": "design-system/components/Stack/Stack.stories.tsx",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"center\"| \"stretch\" | \"start\" | \"end\"",
+          "required": false,
+          "description": "Cross-axis alignment of the children.",
+          "default": "\"stretch\""
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Content to lay out."
+        },
+        {
+          "name": "direction",
+          "type": "\"column\"| \"row\"",
+          "required": false,
+          "description": "Main axis. A `column` stack can become a row at `switchAt`.",
+          "default": "\"column\""
+        },
+        {
+          "name": "fill",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Children share the row width equally (e.g. filter fields side by side). Has no effect while the stack is a column.",
+          "default": "false"
+        },
+        {
+          "name": "gap",
+          "type": "\"1\"| \"2\" | \"3\" | \"4\" | \"6\" | \"8\"",
+          "required": false,
+          "description": "Space between children, from the spacing tokens (1 = 0.25rem, 4 = 1rem).",
+          "default": "\"4\""
+        },
+        {
+          "name": "switchAt",
+          "type": "\"sm\"| \"md\" | \"lg\" | \"none\" | \"xl\"",
+          "required": false,
+          "description": "Breakpoint (token: sm 640, md 768, lg 1024, xl 1280) at which a `column` stack becomes a `row`. Mobile-first: below it the children are stacked. Ignored for `direction=\"row\"`.",
+          "default": "\"none\""
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Layout only: it adds no semantics. Source order is visual order, so keep the DOM order meaningful."
+        ]
+      },
+      "acceptsNativeAttributes": true,
       "parts": []
     },
     {
@@ -732,7 +936,7 @@
             },
             {
               "name": "sortDirection",
-              "type": "\"ascending\"| \"descending\" | \"none\"",
+              "type": "\"none\"| \"ascending\" | \"descending\"",
               "required": false,
               "description": "Current sort state of this column. Omit for columns that cannot be sorted.",
               "a11y": true

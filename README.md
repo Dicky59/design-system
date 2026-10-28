@@ -36,7 +36,7 @@ Most design systems are written for people. This one is written for an LLM that 
 
 ```mermaid
 flowchart LR
-  T["tokens.json<br/>(source of truth)"] -->|tokens:build| CSS["tokens.css<br/>CSS variables"]
+  T["tokens.json<br/>(source of truth)"] -->|tokens:build| CSS["tokens.css<br/>CSS variables + [data-theme] blocks"]
   T --> TW["tailwind-theme.cjs<br/>Tailwind theme (replaced, not extended)"]
   CSS --> C
   TW --> C
@@ -53,6 +53,22 @@ flowchart LR
   CL["CLAUDE.md<br/>rules + workflow"] --> V
 ```
 
+## Themes
+
+Three themes ship with the system: `default`, `forest` (green primary, smaller radii) and `dark`. They are defined in `tokens.json` under `themes` and selected with `data-theme` on `<html>`.
+
+- The **palettes are shared**. A theme overrides only **semantic tokens** (surface, text, border, primary, status colors, focus ring) and may override radii and font families. It never changes spacing, type scale or components.
+- `npm run tokens:build` writes `:root` (the default theme, unchanged) and one `[data-theme="..."]` block per other theme. Tailwind needs no changes: components already use `var(--ds-...)` through the token theme.
+- `npm run tokens:contrast` checks WCAG contrast for every text, UI and focus-ring pair in every theme (4.5:1 for text, 3:1 for UI and focus) and fails the build below that.
+- Storybook has a theme switcher in the toolbar, and every story runs with axe once per theme. Playwright runs `/customers` with axe in all three themes at 375 px and 1280 px.
+- The Customers page has a theme selector (the design system `Select`). The choice is saved in `localStorage`, and a small inline script in `<head>` applies it before first paint, so there is no flash of the wrong theme.
+- Adding a theme: see "Adding a theme" in `CLAUDE.md`.
+
+| default | forest | dark |
+|---|---|---|
+| ![Customers, default theme](docs/screenshots/customers-theme-default-1280.png) | ![Customers, forest theme](docs/screenshots/customers-theme-forest-1280.png) | ![Customers, dark theme](docs/screenshots/customers-theme-dark-1280.png) |
+| ![Mobile, default theme](docs/screenshots/customers-theme-default-375.png) | ![Mobile, forest theme](docs/screenshots/customers-theme-forest-375.png) | ![Mobile, dark theme](docs/screenshots/customers-theme-dark-375.png) |
+
 ## What makes it LLM-reliable
 
 | Mechanism | What it prevents |
@@ -63,7 +79,8 @@ flowchart LR
 | **`manifest.json`** (generated, never hand-edited). | Guessing which components and props exist |
 | **Per-component guides** with Do/Don't rules. | Misusing a component |
 | **`CLAUDE.md`** with non-negotiable rules, Finnish copy conventions and the spec to view workflow. | Skipping steps |
-| **Check scripts.** `tokens:check` and `manifest:check` fail on stale generated files; `verify` also runs typecheck, lint, Storybook tests (axe on every story, a violation fails) and the Playwright tests. | Silent regressions |
+| **Check scripts.** `tokens:check` and `manifest:check` fail on stale generated files; `tokens:contrast` fails on low contrast in any theme; `verify` also runs typecheck, lint, Storybook tests (axe on every story in every theme, a violation fails) and the Playwright tests. | Silent regressions |
+| **Themes are tokens only.** A theme overrides semantic tokens, so a view that uses token utilities works in every theme; a hardcoded color is the one thing that breaks dark mode, and lint rejects it. | Colors that ignore the theme |
 
 ## How Claude Code built the Customers view
 
@@ -90,15 +107,16 @@ From `docs/specs/customers.md`, one commit per step:
 | `npm run build` / `npm start` | Production build / serve it |
 | `npm run storybook` | Storybook on :6006 |
 | `npm run build-storybook` | Static Storybook build into `storybook-static/` |
-| `npm run tokens:build` / `tokens:check` | Generate `tokens.css` / fail if stale |
+| `npm run tokens:build` / `tokens:check` | Generate `tokens.css` and `themes.generated.ts` / fail if stale |
+| `npm run tokens:contrast` | WCAG contrast of every text, UI and focus pair in every theme; fails on a miss |
 | `npm run manifest:build` / `manifest:check` | Generate `manifest.json` / fail if stale |
-| `npm run check` | `tokens:check` + `manifest:check` |
+| `npm run check` | `tokens:check` + `manifest:check` + `tokens:contrast` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm run lint` | ESLint, including the style and import rules |
-| `npm test` | Vitest: every story in headless Chromium with axe, plus unit tests for the Customers logic |
-| `npm run test:e2e` | Playwright against the production build at 375 px and 1280 px: axe in all states, keyboard and focus tests |
+| `npm test` | Vitest: every story in headless Chromium with axe, once per theme, plus unit tests for the Customers logic |
+| `npm run test:e2e` | Playwright against the production build at 375 px and 1280 px: axe in all states and all themes, keyboard and focus tests, theme persistence |
 | `npm run verify` | `check` + `typecheck` + `lint` + `test` + `test:e2e`; run before every commit |
-| `npm run screenshots` | Build, start, and capture `docs/screenshots/` |
+| `npm run screenshots` | Build, start, and capture `docs/screenshots/` (all states, and the default view in each theme) |
 
 First run needs a browser: `npx playwright install chromium`.
 
@@ -108,12 +126,14 @@ First run needs a browser: `npx playwright install chromium`.
 design-system/
   manifest.json          generated component index
   build-manifest.mjs
-  tokens/                tokens.json (source), tokens.css (generated), tailwind-theme.cjs
+  tokens/                tokens.json (source, incl. themes), tokens.css + themes.generated.ts (generated),
+                         tailwind-theme.cjs, check-contrast.mjs
   components/<Name>/     <Name>.tsx, .stories.tsx, .md
   components/index.ts    public barrel
   lib/                   shared helpers (cn, field, icons, focus ring)
 app/
   customers/             view, dialogs, data/, lib/ (pure logic + unit tests)
+  theme/                 theme selector (design system Select) and the no-flash init script
 docs/
   specs/                 view specs (customers.md, _template.md)
   screenshots/           generated by npm run screenshots
@@ -156,6 +176,7 @@ The app redirects `/` to `/customers` (see `next.config.ts`). Both builds run `t
 - All data is fictional and lives in `app/customers/data/`. There is no backend and no persistence: a customer you add is lost on reload.
 - Loading (about 500 ms) and the error state are simulated. `?state=error` shows the error on the first load; "Yritä uudelleen" then succeeds.
 - Finnish only; text is hardcoded, there is no i18n layer.
+- Themes: the dark and forest values were chosen by contrast numbers, not by a designer. The theme follows the saved choice only; it does not follow the OS `prefers-color-scheme`.
 - Select focus on error: the form moves focus to the first invalid field by `id`, and `Select` supports `id` and `ref`, so this works. The Customers form has no validation on its Select, so that path is not exercised in the UI.
 - Screenshots are stable on one machine; fonts are the system font stack, so other operating systems render slightly differently.
 - Not audited with a screen reader: axe and keyboard tests only.

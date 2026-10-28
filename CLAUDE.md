@@ -16,17 +16,35 @@ Next.js App Router, TypeScript strict, Tailwind 3, Storybook.
 
 1. **`design-system/manifest.json`**: first stop when choosing a component. It lists every component with its description, props, variants, sizes, required a11y props and the path to its guide.
 2. **`design-system/components/<Name>/<Name>.md`**: read the guide of every component you are about to use (examples and "don't" rules).
-3. **`design-system/tokens/tokens.json`**: the only source of colors, type, spacing, radii, shadows, z-index and breakpoints.
+3. **`design-system/tokens/tokens.json`**: the only source of colors, type, spacing, radii, shadows, z-index, breakpoints and themes.
 
 ## Rules (non-negotiable)
 
 1. **Only design system components and tokens.** Views in `app/` compose components from `@/design-system/components`. Do not hand-build buttons, inputs, tables, dialogs, etc.
 2. **Missing component? Add it to the design system first**: component, story, guide, manifest. Do not make one-off components in `app/`.
 3. **No hardcoded styles.** No hex/rgb colors, no inline `style`, no arbitrary Tailwind values (`w-[12px]`, `bg-[#fff]`), no raw palette names (`bg-blue-500`; they do not exist). The Tailwind theme is replaced by tokens, so only token utilities work: `bg-surface`, `text-content-muted`, `p-4`, `rounded-md`, `shadow-md`, `md:flex`. ESLint enforces this.
-4. **Token changes happen in `tokens.json` only**, then `npm run tokens:build`. Never edit `tokens.css` or `manifest.json` by hand.
+4. **Token changes happen in `tokens.json` only**, then `npm run tokens:build`. Never edit `tokens.css`, `themes.generated.ts` or `manifest.json` by hand.
 5. **Radix is an implementation detail.** `@radix-ui/*` may only be imported inside `design-system/`. Views import from the barrel `@/design-system/components`, never from a component folder.
 6. **Components expose fixed variants, not `className`.** Do not add a `className` escape hatch to make a view look different. Add a variant to the component instead.
 7. **Responsive** with the token breakpoints (`sm` 640, `md` 768, `lg` 1024, `xl` 1280), mobile-first.
+
+## Themes
+
+The design system has themes (`default`, `forest`, `dark`), selected with `data-theme` on `<html>`. A view must look right in all of them without knowing which is active.
+
+- **Never hardcode colors.** Use semantic token utilities (`bg-surface`, `text-content`, `border-border`, `bg-primary text-primary-text`, `bg-success-bg text-success-text`). A hex value, an `rgb()`, or a raw palette name would not change with the theme, and breaks dark mode.
+- **Never use the palette directly** (`palette.*` has no Tailwind utilities on purpose). The palette is shared by all themes; only semantic tokens point at it.
+- **Themes only change semantic tokens**: `color.*`, `radius.*` and `font.family.*` under `themes.<id>` in `tokens.json`. A theme never changes spacing, type scale, shadows, z-index or breakpoints, and never adds a component variant.
+- **Do not branch on the theme in components or views** (no `theme === "dark"`, no `dark:` variants). If something looks wrong in one theme, fix the token, not the component.
+- Use the documented token pairs (`bg-primary text-primary-text`, `bg-success-bg text-success-text`, `text-content` on `bg-surface`...). `npm run tokens:contrast` checks them in every theme.
+
+### Adding a theme
+
+1. In `tokens.json` add `themes.<id>` with `label` (Finnish, shown in the selector), `scheme` (`light` or `dark`) and only the semantic tokens that differ (`color`, `radius`, optionally `font.family`). Reference palette entries with `{palette.group.shade}`; add new shades to `palette` when needed (they are shared and invisible to the other themes).
+2. `npm run tokens:build`. This adds a `[data-theme="<id>"]` block to `tokens.css` and the theme to `themes.generated.ts`. Unknown token names fail the build.
+3. `npm run tokens:contrast`. Fix any failing pair in `tokens.json` (text 4.5:1; UI boundaries, focus ring 3:1).
+4. `npm run verify`. Storybook runs every story with axe once per theme, and Playwright runs `/customers` with axe in every theme. The selector, the Storybook toolbar and the tests pick up the new theme automatically.
+5. `npm run screenshots` and, if you show themes in the README, add the new screenshot.
 
 ## Accessibility (WCAG 2.2 AA)
 
@@ -67,15 +85,18 @@ Next.js App Router, TypeScript strict, Tailwind 3, Storybook.
 | `npm run build` | Production build |
 | `npm run storybook` | Storybook on :6006 |
 | `npm run build-storybook` | Static Storybook build |
-| `npm run tokens:build` | Regenerate `tokens.css` from `tokens.json` |
-| `npm run tokens:check` | Fail if `tokens.css` is stale |
+| `npm run tokens:build` | Regenerate `tokens.css` and `themes.generated.ts` from `tokens.json` |
+| `npm run tokens:check` | Fail if `tokens.css` or `themes.generated.ts` is stale |
+| `npm run tokens:contrast` | WCAG contrast of every text, UI and focus pair in every theme; fails below 4.5:1 (text) or 3:1 (UI, focus) |
 | `npm run manifest:build` | Regenerate `design-system/manifest.json` from component source |
 | `npm run manifest:check` | Fail if `manifest.json` is stale |
-| `npm run check` | `tokens:check` + `manifest:check` |
+| `npm run check` | `tokens:check` + `manifest:check` + `tokens:contrast` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm run lint` | ESLint, including the style and import rules |
-| `npm test` | Runs every story in headless Chromium, including axe accessibility checks |
-| `npm run verify` | `check` + `typecheck` + `lint` + `test`; run before every commit |
+| `npm test` | Runs every story in headless Chromium with axe, once per theme, plus unit tests |
+| `npm run test:e2e` | Playwright against the production build at 375 px and 1280 px: axe in all states and themes, keyboard and focus tests |
+| `npm run screenshots` | Build, start and capture `docs/screenshots/` (all states and each theme) |
+| `npm run verify` | `check` + `typecheck` + `lint` + `test` + `test:e2e`; run before every commit |
 
 ## Project layout
 
@@ -83,7 +104,7 @@ Next.js App Router, TypeScript strict, Tailwind 3, Storybook.
 design-system/
   manifest.json          generated component index
   build-manifest.mjs
-  tokens/                tokens.json (source), tokens.css (generated), tailwind-theme.cjs
+  tokens/                tokens.json (source, incl. themes), tokens.css + themes.generated.ts (generated), tailwind-theme.cjs, check-contrast.mjs
   components/<Name>/     <Name>.tsx, .stories.tsx, .md
   components/index.ts    public barrel
 docs/specs/              view specs

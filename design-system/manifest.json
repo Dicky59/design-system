@@ -258,6 +258,152 @@
       ]
     },
     {
+      "name": "Dialog",
+      "description": "Modal window for a focused task or a confirmation. Compose with DialogTrigger, DialogContent, DialogFooter and DialogClose.",
+      "guide": "design-system/components/Dialog/Dialog.md",
+      "source": "design-system/components/Dialog/Dialog.tsx",
+      "story": "design-system/components/Dialog/Dialog.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "DialogTrigger (optional) and DialogContent."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Initial open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((open:boolean) => void) | undefined",
+          "required": false,
+          "description": "Called when the dialog requests to open or close (Esc, overlay click, close button)."
+        },
+        {
+          "name": "open",
+          "type": "boolean| undefined",
+          "required": false,
+          "description": "Controlled open state."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Focus moves into the dialog, is trapped there, returns to the trigger on close; Esc closes."
+        ]
+      },
+      "acceptsNativeAttributes": false,
+      "parts": [
+        {
+          "name": "DialogClose",
+          "description": "Wraps an element that closes the dialog when activated.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactElement<unknown,string | JSXElementConstructor<any>>",
+              "required": true,
+              "description": "A single interactive element, usually a secondary Button (\"Peruuta\"). It closes the dialog."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "DialogContent",
+          "description": "The dialog window with overlay, title, description and a close button.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Body content, and a DialogFooter with the actions."
+            },
+            {
+              "name": "closeLabel",
+              "type": "string| undefined",
+              "required": false,
+              "description": "Accessible name of the close button.",
+              "default": "\"Sulje\""
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": true,
+              "description": "One or two sentences explaining the purpose or consequence.",
+              "a11y": true
+            },
+            {
+              "name": "size",
+              "type": "\"sm\"| \"md\" | \"lg\"",
+              "required": false,
+              "description": "Width of the dialog.",
+              "default": "\"md\""
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "required": true,
+              "description": "Dialog title in Finnish. Names the dialog for screen readers.",
+              "a11y": true
+            }
+          ],
+          "sizes": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "a11y": {
+            "requiredProps": [
+              "description",
+              "title"
+            ],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "DialogFooter",
+          "description": "Right-aligned action row at the bottom of the dialog.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Action buttons. Put the primary action last."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "DialogTrigger",
+          "description": "Wraps the element that opens the dialog.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactElement<unknown,string | JSXElementConstructor<any>>",
+              "required": true,
+              "description": "A single interactive element, usually a Button. It receives the open behavior."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        }
+      ]
+    },
+    {
       "name": "Input",
       "description": "Single-line text field with built-in label, hint and error message.",
       "guide": "design-system/components/Input/Input.md",

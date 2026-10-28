@@ -11,3 +11,4 @@ export * from "./Alert/Alert";
 export * from "./Skeleton/Skeleton";
 export * from "./DescriptionList/DescriptionList";
 export * from "./Stack/Stack";
+export * from "./PageHeader/PageHeader";

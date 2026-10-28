@@ -574,6 +574,124 @@
           "acceptsNativeAttributes": true
         }
       ]
+    },
+    {
+      "name": "Tabs",
+      "description": "Switches between related panels of content on the same page. Compose with TabsList, TabsTrigger and TabsContent.",
+      "guide": "design-system/components/Tabs/Tabs.md",
+      "source": "design-system/components/Tabs/Tabs.tsx",
+      "story": "design-system/components/Tabs/Tabs.stories.tsx",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "TabsList and one TabsContent per tab."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Initially active tab when uncontrolled."
+        },
+        {
+          "name": "onValueChange",
+          "type": "((value:string) => void) | undefined",
+          "required": false,
+          "description": "Called with the `value` of the newly active tab."
+        },
+        {
+          "name": "value",
+          "type": "string| undefined",
+          "required": false,
+          "description": "Controlled active tab (the `value` of a TabsTrigger)."
+        }
+      ],
+      "a11y": {
+        "requiredProps": [],
+        "notes": [
+          "Keyboard: arrow keys move between tabs, Home/End jump to first/last, Tab moves into the panel."
+        ]
+      },
+      "acceptsNativeAttributes": false,
+      "parts": [
+        {
+          "name": "TabsContent",
+          "description": "Panel shown when its tab is active.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Matches the `value` of its TabsTrigger."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "TabsList",
+          "description": "Row of tab buttons.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "TabsTrigger elements."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": true,
+              "description": "Accessible name of the tab group in Finnish, e.g. \"Asiakkaan tiedot\".",
+              "a11y": true
+            }
+          ],
+          "a11y": {
+            "requiredProps": [
+              "label"
+            ],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        },
+        {
+          "name": "TabsTrigger",
+          "description": "A single tab button.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Short Finnish tab title."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean| undefined",
+              "required": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Identifies the tab; must match the `value` of its TabsContent."
+            }
+          ],
+          "a11y": {
+            "requiredProps": [],
+            "notes": []
+          },
+          "acceptsNativeAttributes": false
+        }
+      ]
     }
   ]
 }

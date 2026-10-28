@@ -31,6 +31,14 @@ export default defineConfig({
           },
         },
       },
+      {
+        // Pure functions (filtering, sorting, validation, formatting) run in plain Node.
+        test: {
+          name: 'unit',
+          environment: 'node',
+          include: ['app/**/*.test.ts'],
+        },
+      },
     ],
   },
 });

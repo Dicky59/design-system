@@ -17,7 +17,7 @@ See `design-system/manifest.json` for the full list. Key props:
 | `value` / `onValueChange` | Controlled usage |
 | `defaultValue` | Uncontrolled usage |
 | `placeholder` | Text when nothing is selected (default "Valitse") |
-| `hint`, `error`, `required`, `disabled`, `name` | Same meaning as in Input |
+| `hint`, `error`, `required`, `disabled`, `name` | Same meaning as in Input. The hint is shown below the control, so a Select lines up with an Input that has a hint |
 
 ## Examples
 

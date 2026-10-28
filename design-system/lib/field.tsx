@@ -31,7 +31,10 @@ interface FieldProps {
   children: ReactNode;
 }
 
-/** Label, control slot, hint and error message. The error has an icon so it is not color-only. */
+/**
+ * Label, control slot, hint and error message. The hint sits below the control (not between label and control),
+ * so controls in a row line up whether or not they have a hint. The error has an icon so it is not color-only.
+ */
 export function Field({ id, label, required, hint, hintId, error, errorId, children }: FieldProps) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -43,12 +46,12 @@ export function Field({ id, label, required, hint, hintId, error, errorId, child
           </span>
         ) : null}
       </label>
+      {children}
       {hint ? (
         <p id={hintId} className="text-sm text-content-muted">
           {hint}
         </p>
       ) : null}
-      {children}
       {error ? (
         <p id={errorId} className="flex items-start gap-1.5 text-sm text-danger-text">
           <span className="mt-0.5">

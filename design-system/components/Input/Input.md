@@ -13,7 +13,7 @@ See `design-system/manifest.json` for the full list. Key props:
 | Prop | Purpose |
 |---|---|
 | `label` (required) | Visible Finnish label |
-| `hint` | Helper text, e.g. expected format |
+| `hint` | Helper text, e.g. expected format. Shown below the control |
 | `error` | Error message; marks the field invalid |
 | `required` | Native `required` plus an asterisk |
 | `type` | `text`, `email`, `tel`, `search`, `number`, `password`, `url` |
@@ -48,6 +48,7 @@ Autofill-friendly contact fields:
 ## Do
 
 - Always provide `label`. Keep it short and in sentence case: "Laskutusosoite".
+- Fields side by side stay aligned: the hint sits below the control, so an Input with a hint lines up with a Select without one.
 - Use `hint` for format and constraints; use `error` for what went wrong and how to fix it.
 - Set `autoComplete` on personal and contact fields.
 - Use the right `type` so mobile keyboards and validation help the user.
